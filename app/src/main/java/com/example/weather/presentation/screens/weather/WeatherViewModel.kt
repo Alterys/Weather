@@ -14,8 +14,8 @@ class WeatherViewModel: ViewModel() {
     private val _screenState = MutableStateFlow(WeatherState())
     val screenState: StateFlow<WeatherState> = _screenState
 
-    fun getWeather(key: String, city: String) {
-        GetWeatherUseCase()(key, city).onEach { result ->
+    fun getWeather(city: String) {
+        GetWeatherUseCase()(city).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _screenState.update {

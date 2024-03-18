@@ -1,5 +1,7 @@
 package com.example.weather.presentation
 
+import android.Manifest
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

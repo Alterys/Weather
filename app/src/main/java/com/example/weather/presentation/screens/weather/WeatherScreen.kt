@@ -1,6 +1,5 @@
 package com.example.weather.presentation.screens.weather
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,12 +24,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weather.R
-import com.example.weather.common.secret.Secret.API_KEY
 
 @Composable
 fun WeatherScreen(
     screenState: WeatherState,
-    getWeather: (String, String) -> Unit,
+    getWeather: (String) -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -55,6 +53,7 @@ fun WeatherScreen(
                     city = it
                 },
                 singleLine = true,
+                
                 readOnly = screenState.isLoading
             )
 
@@ -62,7 +61,7 @@ fun WeatherScreen(
 
             Button(
                 onClick = {
-                    getWeather(API_KEY, city)
+                    getWeather(city)
                 },
                 enabled = !screenState.isLoading,
                 modifier = Modifier
@@ -74,7 +73,7 @@ fun WeatherScreen(
             }
             Spacer(modifier = Modifier.heightIn(60.dp))
             Text(
-                text = temp,
+                text = "$temp°C",
                 fontSize = 32.sp,
             )
 

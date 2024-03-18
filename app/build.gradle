@@ -73,6 +73,7 @@ dependencies {
 
     //Hilt
     implementation libs.hilt.android
+    implementation libs.play.services.location
     kapt libs.hilt.android.compiler
 
     testImplementation libs.junit
