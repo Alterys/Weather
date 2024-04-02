@@ -3,8 +3,8 @@ package com.example.weather.presentation.screens.weather
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.common.Resource
-import com.example.weather.domain.usecase.GetCurrentUseCase
 import com.example.weather.domain.usecase.GetForecastDayUseCase
+import com.example.weather.domain.usecase.GetWeatherUseCase
 import com.example.weather.presentation.screens.weather.model.toForecastDayModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,12 +18,12 @@ class WeatherViewModel: ViewModel() {
     val screenState: StateFlow<WeatherState> = _screenState
 
     fun getWeather(city: String) {
-        GetCurrentUseCase()(city).onEach { result ->
+        GetWeatherUseCase()(city).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _screenState.update {
                         it.copy(
-                            weatherCurrent = result.data,
+                            weatherCurrent = result.data.current,
                             isLoading = false
                         )
                     }

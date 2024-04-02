@@ -2,7 +2,6 @@ package com.example.weather.data.remote
 
 import com.example.weather.data.remote.response.Weather
 import retrofit2.http.GET
-import retrofit2.Call
 import retrofit2.http.Query
 
 interface WeatherApi {
