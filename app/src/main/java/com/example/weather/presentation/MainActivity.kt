@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     WeatherScreen(
                         screenState = state,
                         getWeather = weatherViewModel::getWeather,
-                        getForecast = weatherViewModel::getForecast
+                        searchCity = weatherViewModel::searchCity
                     )
                 }
             }

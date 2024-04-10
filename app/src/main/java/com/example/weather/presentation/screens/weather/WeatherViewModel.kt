@@ -3,8 +3,8 @@ package com.example.weather.presentation.screens.weather
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.common.Resource
-import com.example.weather.domain.usecase.GetForecastDayUseCase
 import com.example.weather.domain.usecase.GetWeatherUseCase
+import com.example.weather.domain.usecase.SearchCityUseCase
 import com.example.weather.presentation.screens.weather.model.toForecastDayModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,9 +21,11 @@ class WeatherViewModel: ViewModel() {
         GetWeatherUseCase()(city).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _screenState.update {
-                        it.copy(
+                    _screenState.update {state ->
+                        state.copy(
                             weatherCurrent = result.data.current,
+                            location = result.data.location,
+                            forecastDay = result.data.forecast.forecastday.map {it.toForecastDayModel()},
                             isLoading = false
                         )
                     }
@@ -45,14 +47,17 @@ class WeatherViewModel: ViewModel() {
             }
         }.launchIn(viewModelScope)
     }
-    fun getForecast(city: String) {
-        GetForecastDayUseCase()(city).onEach { result ->
+
+    fun searchCity(city: String) {
+        if (city.length < 3) {
+            return
+        }
+        SearchCityUseCase()(city).onEach {result ->
             when(result) {
                 is Resource.Success -> {
-                    _screenState.update {state ->
+                        _screenState.update { state ->
                         state.copy(
-                            forecastDay = result.data.forecastday.map {it.toForecastDayModel()},
-                            isLoading = false
+                            city = result.data.map { it.nameSearch }
                         )
                     }
                 }
