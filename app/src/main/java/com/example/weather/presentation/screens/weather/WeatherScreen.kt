@@ -9,31 +9,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.weather.R
 import com.example.weather.presentation.screens.weather.components.WeatherImage
 
 
 @Composable
 fun WeatherScreen(
+    city: String,
+    navController: NavController,
     screenState: WeatherState,
     getWeather: (String) -> Unit,
-    searchCity: (String) -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -45,33 +40,8 @@ fun WeatherScreen(
     ) {
 
 
-        var city by remember {
-            mutableStateOf("")
-        }
-
         Column(modifier = Modifier.fillMaxSize()) {
 
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = city,
-                keyboardOptions = KeyboardOptions.Default,
-                keyboardActions = KeyboardActions(),
-                onValueChange = {
-                    city = it
-                    searchCity(city)
-                },
-                singleLine = true,
-                readOnly = false
-            )
-            if (city.length >= 3) {
-
-                Text(
-                    text = city.length.toString()
-                )
-                Text(
-                    text = screenState.city.toString()
-                )
-            }
 
             Spacer(modifier = Modifier.heightIn(60.dp))
             Button(
@@ -103,7 +73,7 @@ fun WeatherScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                screenState.forecastDay?.forEachIndexed { _, forecastDay ->
+                screenState.forecastDay?.forEach { forecastDay ->
                     Column(
                         modifier = Modifier.padding(5.dp)
                     ) {
