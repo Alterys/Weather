@@ -9,17 +9,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.weather.R
 import com.example.weather.presentation.screens.weather.components.WeatherImage
 
 
@@ -38,24 +35,10 @@ fun WeatherScreen(
             )
             .padding(10.dp)
     ) {
-
+        getWeather(city)
 
         Column(modifier = Modifier.fillMaxSize()) {
 
-
-            Spacer(modifier = Modifier.heightIn(60.dp))
-            Button(
-                onClick = {
-                    getWeather(city)
-                },
-                modifier = Modifier
-                    .padding(5.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.button_search)
-                )
-            }
-            Spacer(modifier = Modifier.heightIn(60.dp))
             screenState.weatherCurrent?.temp?.let {
                 Text(
                     text = "$it°C",
