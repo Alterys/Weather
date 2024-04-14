@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.common.Resource
 import com.example.weather.domain.usecase.SearchCityUseCase
+import com.example.weather.presentation.screens.city.search.model.toSearchModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -24,7 +25,7 @@ class CitySearchViewModel: ViewModel() {
                 is Resource.Success -> {
                     _screenState.update { state ->
                         state.copy(
-                            city = result.data.map { it.nameSearch }.toSortedSet()
+                            searchModel = result.data.map {it.toSearchModel()}
                         )
                     }
                 }

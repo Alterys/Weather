@@ -1,7 +1,12 @@
 package com.example.weather.presentation.screens.city.search
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -13,6 +18,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun CitySearchScreen(
@@ -37,11 +44,36 @@ fun CitySearchScreen(
             readOnly = false
         )
 
-        screenState.city.forEach { city ->
+        screenState.searchModel.forEach { searchModel ->
             TextButton(
-                onClick = { onNavigateToWeather(city) }
+                onClick = { searchModel.city?.let { onNavigateToWeather(it) } }
             ) {
-                Text(text = city)
+                Column {
+                    searchModel.city?.let { city ->
+                        Text(
+                            text = city,
+                            fontSize = 18.sp,
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.padding(5.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ){
+                        searchModel.region?.let {region ->
+                            Text(
+                                text = region,
+                                fontSize = 12.sp,
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(3.dp))
+                        searchModel.country?.let {country ->
+                            Text(
+                                text = country,
+                                fontSize = 12.sp,
+                            )
+                        }
+                    }
+                }
             }
         }
     }
