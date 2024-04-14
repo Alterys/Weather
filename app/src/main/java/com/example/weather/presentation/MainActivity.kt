@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                             route = "citySearch",
                         ) {
                             CitySearchScreen(
-                                onNavigateToWeather = { navController.navigate("citySearch/$it") },
+                                onNavigateToWeather = { navController.navigate("weather/$it") },
                                 screenState = stateCitySearch,
                                 searchCity = citySearchViewModel::searchCity
                             )
