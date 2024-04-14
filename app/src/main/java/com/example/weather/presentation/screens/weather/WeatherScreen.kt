@@ -1,14 +1,20 @@
 package com.example.weather.presentation.screens.weather
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,8 +43,23 @@ fun WeatherScreen(
     ) {
         getWeather(city)
 
-        Column(modifier = Modifier.fillMaxSize()) {
 
+        Column(modifier = Modifier.fillMaxSize()) {
+            Row {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "icon",
+                    modifier = Modifier
+                        .height(28.dp)
+                        .width(28.dp)
+                        .padding(bottom = 4.dp)
+                        .clickable { navController.navigate("cityManager") }
+                )
+                Text(
+                    text = city
+                )
+            }
+            Spacer(modifier = Modifier.heightIn(60.dp))
             screenState.weatherCurrent?.temp?.let {
                 Text(
                     text = "$it°C",
