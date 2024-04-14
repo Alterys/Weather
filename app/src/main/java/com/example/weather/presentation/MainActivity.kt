@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.weather.presentation.screens.city.manager.CityManagerScreen
+import com.example.weather.presentation.screens.city.manager.CityManagerViewModel
 import com.example.weather.presentation.screens.city.search.CitySearchScreen
 import com.example.weather.presentation.screens.city.search.CitySearchViewModel
 import com.example.weather.presentation.screens.weather.WeatherScreen
@@ -31,6 +32,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val weatherViewModel: WeatherViewModel by viewModels()
                     val citySearchViewModel: CitySearchViewModel by viewModels()
+                    val cityManagerViewModel: CityManagerViewModel by viewModels()
+                    val stateCityManager = cityManagerViewModel.screenState.collectAsState().value
                     val stateWeather = weatherViewModel.screenState.collectAsState().value
                     val stateCitySearch = citySearchViewModel.screenState.collectAsState().value
                     val navController = rememberNavController()
@@ -42,7 +45,8 @@ class MainActivity : ComponentActivity() {
                             route = "cityManager"
                         ) {
                             CityManagerScreen(
-                                navController = navController
+                                navController = navController,
+                                screenState = stateCityManager,
                             )
                         }
                         composable(
