@@ -1,5 +1,6 @@
 package com.example.weather.presentation.screens.weather
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +44,9 @@ fun WeatherScreen(
     ) {
         getWeather(city)
 
+        BackHandler(true) {
+
+        }
 
         Column(modifier = Modifier.fillMaxSize()) {
             Row {
@@ -99,6 +103,7 @@ fun WeatherScreen(
                     }
                 }
             }
+
         }
     }
 }
