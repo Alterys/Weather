@@ -18,7 +18,8 @@ fun CityManagerScreen(
     Column {
         Button(
             onClick = { navController.navigate("citySearch") },
-            modifier = Modifier.width(OutlinedTextFieldDefaults.MinWidth)
+            modifier = Modifier
+                .width(OutlinedTextFieldDefaults.MinWidth)
                 .height(OutlinedTextFieldDefaults.MinHeight)
         ) {
             Text("Поиск")
