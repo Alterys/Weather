@@ -69,6 +69,7 @@ class MainActivity : ComponentActivity() {
                                 screenState = stateWeather,
                                 getWeather = weatherViewModel::getWeather
                             )
+
                         }
                     }
                 }

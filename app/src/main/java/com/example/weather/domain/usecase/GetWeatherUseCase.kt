@@ -7,7 +7,6 @@ import com.example.weather.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 class GetWeatherUseCase(
     private val repository: WeatherRepository = WeatherRepositoryImpl
 ) {
