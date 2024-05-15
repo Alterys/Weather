@@ -20,7 +20,9 @@ import com.example.weather.presentation.screens.city.search.CitySearchViewModel
 import com.example.weather.presentation.screens.weather.WeatherScreen
 import com.example.weather.presentation.screens.weather.WeatherViewModel
 import com.example.weather.presentation.ui.theme.WeatherTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +33,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     val weatherViewModel: WeatherViewModel by viewModels()
-                    val citySearchViewModel: CitySearchViewModel by viewModels()
                     val cityManagerViewModel: CityManagerViewModel by viewModels()
                     val stateCityManager = cityManagerViewModel.screenState.collectAsState().value
                     val stateWeather = weatherViewModel.screenState.collectAsState().value
-                    val stateCitySearch = citySearchViewModel.screenState.collectAsState().value
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
@@ -45,29 +45,42 @@ class MainActivity : ComponentActivity() {
                             route = "cityManager"
                         ) {
                             CityManagerScreen(
+                                onNavigateToWeather = { navController.navigate("weather/$it") },
                                 navController = navController,
                                 screenState = stateCityManager,
+                                getListCity = cityManagerViewModel::getListCity,
+                                deleteCity = cityManagerViewModel::deleteCity
                             )
                         }
                         composable(
                             route = "citySearch",
-                        ) {
+                            ) {
+                            val citySearchViewModel: CitySearchViewModel by viewModels()
                             CitySearchScreen(
-                                onNavigateToWeather = { navController.navigate("weather/$it") },
-                                screenState = stateCitySearch,
-                                searchCity = citySearchViewModel::searchCity
+                                onNavigateToWeather = {
+                                    navController.navigate("weather/$it") {
+
+                                        popUpTo("citySearch") {
+                                            inclusive = true
+                                        }
+                                    }
+                                },
+                                screenState = citySearchViewModel.screenState.collectAsState().value,
+                                searchCity = citySearchViewModel::searchCity,
+                                addCity = citySearchViewModel::addCity,
+                                clearListCity = citySearchViewModel::clearListCity
                             )
                         }
                         composable(
                             route = "weather/{city}",
-                            arguments = listOf(navArgument("city") { type = NavType.StringType})
+                            arguments = listOf(navArgument("city") { type = NavType.StringType })
                         ) {
                             val city = it.arguments?.getString("city") ?: ""
                             WeatherScreen(
                                 city = city,
                                 navController = navController,
                                 screenState = stateWeather,
-                                getWeather = weatherViewModel::getWeather
+                                getWeather = weatherViewModel::getWeather,
                             )
 
                         }

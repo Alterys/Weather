@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.sp
 fun CitySearchScreen(
     onNavigateToWeather: (String) -> Unit,
     screenState: CitySearchState,
-    searchCity: (String) -> Unit
+    searchCity: (String) -> Unit,
+    addCity: (String) -> Unit,
+    clearListCity: () -> Unit
 ) {
     var city by remember {
         mutableStateOf("")
@@ -46,7 +48,13 @@ fun CitySearchScreen(
 
         screenState.searchModel.forEach { searchModel ->
             TextButton(
-                onClick = { searchModel.city?.let { onNavigateToWeather(it) } }
+                onClick = {
+                    searchModel.city?.let {
+                        addCity(it)
+                        clearListCity()
+                        onNavigateToWeather(it)
+                    }
+                }
             ) {
                 Column {
                     searchModel.city?.let { city ->
@@ -58,15 +66,15 @@ fun CitySearchScreen(
                     Row(
                         modifier = Modifier.padding(5.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly,
-                    ){
-                        searchModel.region?.let {region ->
+                    ) {
+                        searchModel.region?.let { region ->
                             Text(
                                 text = region,
                                 fontSize = 12.sp,
                             )
                         }
                         Spacer(modifier = Modifier.width(3.dp))
-                        searchModel.country?.let {country ->
+                        searchModel.country?.let { country ->
                             Text(
                                 text = country,
                                 fontSize = 12.sp,

@@ -6,9 +6,10 @@ import com.example.weather.data.repository.WeatherRepositoryImpl
 import com.example.weather.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class GetWeatherUseCase(
-    private val repository: WeatherRepository = WeatherRepositoryImpl
+class GetWeatherUseCase @Inject constructor(
+    private val repository: WeatherRepository
 ) {
     operator fun invoke(city: String): Flow<Resource<Weather>> = flow {
         try {
