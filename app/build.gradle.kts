@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.compilerKsp)
+    alias(libs.plugins.hilt)
 }
 
 val localPropertiesFile = rootProject.file("local.properties")
@@ -27,7 +28,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField("String", "BASE_URL", "\"${localProperties["baseUrl"]}\"")
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+        buildConfigField("String", "API_KEY", "\"${localProperties["API_KEY"]}\"")
     }
 
     buildTypes {
@@ -60,8 +64,14 @@ android {
 }
 
 dependencies {
+    //Room
     implementation(libs.androidx.room)
     ksp(libs.androidx.room.compiler)
+
+    // Hilt
+    implementation(libs.androidx.hilt)
+    ksp(libs.androidx.hilt.compiler)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,9 +45,8 @@ fun WeatherScreen(
     ) {
         getWeather(city)
 
-        BackHandler(true) {
 
-        }
+
 
         Column(modifier = Modifier.fillMaxSize()) {
             Row {
